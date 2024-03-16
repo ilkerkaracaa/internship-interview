@@ -132,6 +132,20 @@ class Simulation {
                 }
             }
 
+            for (Canli canli : canlilar) {
+                if(canli instanceof Avci) {
+                    for (Canli av : canlilar) {
+                        if(av instanceof Koyun || av instanceof Tavuk || av instanceof Horoz) {
+                            if(Math.abs(canli.X - av.X) <= ((Avci) canli).AvMesafesi && Math.abs(canli.Y - av.Y) <= ((Avci) canli).AvMesafesi) {
+                                System.out.println(canli.Ad + " " + av.Ad + " avladı");
+                                canlilar.remove(av);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
 
 
 
