@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Iterator;
 
 abstract class Canli {
     String Ad;
@@ -102,6 +103,9 @@ class Simulation {
         System.out.println("*****************************************************");
 
         for (int i = 0; i < 1000; i++) {
+
+            
+
             for (Canli canli : canlilar) {
                 for (int j = 0 ; j < canli.YurumeMesafesi; j++) {
                     if(random.nextInt(2) == 0) {
@@ -131,24 +135,6 @@ class Simulation {
                     }
                 }
             }
-
-            for (Canli canli : canlilar) {
-                if(canli instanceof Avci) {
-                    for (Canli av : canlilar) {
-                        if(av instanceof Koyun || av instanceof Tavuk || av instanceof Horoz) {
-                            if(Math.abs(canli.X - av.X) <= ((Avci) canli).AvMesafesi && Math.abs(canli.Y - av.Y) <= ((Avci) canli).AvMesafesi) {
-                                System.out.println(canli.Ad + " " + av.Ad + " avladı");
-                                canlilar.remove(av);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-
-
-
-
         }
 
         for (Canli canli : canlilar) {
