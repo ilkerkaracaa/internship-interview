@@ -257,9 +257,6 @@ class Simulation {
 
         canlilar.add(new Avci("Avci",(int)random.nextInt(500), (int)random.nextInt(500), 'E', 3, 8));
 
-        for (Canli canli : canlilar) {
-            System.out.println("Ad: " + canli.Ad + " X: " + canli.X + " Y: " + canli.Y + " Cinsiyet: " + canli.cinsiyet + " Mesafe: " + canli.YurumeMesafesi + " Av Mesafesi: " + ((canli instanceof Avci) ? ((Avci) canli).AvMesafesi : "Yok"));
-        }
         System.out.println(canlilar.size());
         System.out.println("*****************************************************");
 
@@ -344,9 +341,9 @@ class Simulation {
             }   
         }
 
-        for (Canli canli : canlilar) {
-            System.out.println("Ad: " + canli.Ad + " X: " + canli.X + " Y: " + canli.Y + " Cinsiyet: " + canli.cinsiyet + " Mesafe: " + canli.YurumeMesafesi + " Av Mesafesi: " + ((canli instanceof Avci) ? ((Avci) canli).AvMesafesi : "Yok"));
-        }
+        // for (Canli canli : canlilar) {
+        //     System.out.println("Ad: " + canli.Ad + " X: " + canli.X + " Y: " + canli.Y + " Cinsiyet: " + canli.cinsiyet + " Mesafe: " + canli.YurumeMesafesi + " Av Mesafesi: " + ((canli instanceof Avci) ? ((Avci) canli).AvMesafesi : "Yok"));
+        // }
         System.out.println(canlilar.size());
     }
 }
