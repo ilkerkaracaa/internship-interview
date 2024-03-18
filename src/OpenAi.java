@@ -18,10 +18,11 @@ abstract class Canli {
     }
 }
 
-class Koyun extends Canli {
-    public Koyun(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi) {
+class Av extends Canli {
+    public Av(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi) {
         super(Ad, X, Y, cinsiyet, YurumeMesafesi);
     }
+
 }
 
 class Avci extends Canli {
@@ -32,72 +33,41 @@ class Avci extends Canli {
     }
 }
 
-class Kurt extends Avci {
-    public Kurt(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi, int AvMesafesi) {
-        super(Ad, X, Y, cinsiyet, YurumeMesafesi, AvMesafesi);
-    }
-}
-
-class Inek extends Canli {
-    public Inek(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi) {
-        super(Ad, X, Y, cinsiyet, YurumeMesafesi);
-    }
-}
-
-class Tavuk extends Canli {
-    public Tavuk(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi) {
-        super(Ad, X, Y, cinsiyet, YurumeMesafesi);
-    }
-}
-
-class Horoz extends Canli {
-    public Horoz(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi) {
-        super(Ad, X, Y, cinsiyet, YurumeMesafesi);
-    }
-}
-
-class Aslan extends Avci {
-    public Aslan(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi, int AvMesafesi) {
-        super(Ad, X, Y, cinsiyet, YurumeMesafesi, AvMesafesi);
-    }
-}
-
 class OpenAi {
     public static void main(String[] args) {
-        int maxSize = 500;
+        int maxSize = 200;
         ArrayList<Canli> canlilar = new ArrayList<Canli>();
         Random random = new Random();
         for (int i = 0; i < 15; i++) {
-            canlilar.add(new Koyun("Koyun",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 2));
-            canlilar.add(new Koyun("Koyun",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 2));
+            canlilar.add(new Av("Koyun",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 2));
+            canlilar.add(new Av("Koyun",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 2));
         }
 
         for (int i = 0; i < 5; i++) {
-            canlilar.add(new Kurt("Kurt",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 3,4));
-            canlilar.add(new Kurt("Kurt",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 3,4));
+            canlilar.add(new Avci("Kurt",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 3,4));
+            canlilar.add(new Avci("Kurt",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 3,4));
         }
 
         for (int i = 0; i < 5; i++) {
-            canlilar.add(new Inek("Inek",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 2));
-            canlilar.add(new Inek("Inek",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 2));
+            canlilar.add(new Av("Inek",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 2));
+            canlilar.add(new Av("Inek",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 2));
         }
 
         for (int i = 0; i < 10; i++) {
-            canlilar.add(new Tavuk("Tavuk",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 1));
+            canlilar.add(new Av("Tavuk",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 1));
         }
 
         for (int i = 0; i < 10; i++) {
-            canlilar.add(new Horoz("Horoz",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 1));
+            canlilar.add(new Av("Horoz",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 1));
         }
         
         for (int i = 0; i < 4; i++) {
-            canlilar.add(new Aslan("Aslan",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 4, 5));
-            canlilar.add(new Aslan("Aslan",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 4, 5));
+            canlilar.add(new Avci("Aslan",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 4, 5));
+            canlilar.add(new Avci("Aslan",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 4, 5));
         }
         canlilar.add(new Avci("Avci",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 3, 8));
-
-        System.out.println(canlilar.size());
         System.out.println("*****************************************************");
+        System.out.println("Toplam Canli Sayisi: " + canlilar.size());
         for (int i = 0; i < 1000; i++) {
             ListIterator<Canli> iterator = canlilar.listIterator();
             while (iterator.hasNext()) {
@@ -146,33 +116,30 @@ class OpenAi {
             iterator = canlilar.listIterator();
             while (iterator.hasNext()) {
                 Canli av = iterator.next();
-                if(av instanceof Koyun || av instanceof Tavuk || av instanceof Horoz) {
+                if(av.Ad.equals("Koyun") || av.Ad.equals("Tavuk") || av.Ad.equals("Horoz")) {
                     for (Canli avci : canlilar) {
                         if(avci.Ad.equals("Kurt")) {
                             if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 4) {
-                                System.out.println(avci.Ad + " " + av.Ad + " avladı");
-                                iterator.remove();//problem burası
-                                break;
-                            }
-                        }
-                    }
-                    
-                } else if(av instanceof Koyun || av instanceof Inek) {
-                    for (Canli avci : canlilar) {
-                        if(avci.Ad.equals("Aslan")) {
-                            if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 5) {
-                                System.out.println(avci.Ad + " " + av.Ad + " avladı");
                                 iterator.remove();
                                 break;
                             }
                         }
                     }
                     
-                } else if(av instanceof Koyun || av instanceof Inek || av instanceof Tavuk || av instanceof Horoz || av instanceof Kurt || av instanceof Aslan) {
+                } else if(av.Ad.equals("Koyun") || av.Ad.equals("Inek")) {
+                    for (Canli avci : canlilar) {
+                        if(avci.Ad.equals("Aslan")) {
+                            if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 5) {
+                                iterator.remove();
+                                break;
+                            }
+                        }
+                    }
+                    
+                } else if(!av.Ad.equals("Avci")){
                     for (Canli avci : canlilar) {
                         if(avci.Ad.equals("Avci")) {
-                            if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 5) {
-                                System.out.println(avci.Ad + " " + av.Ad + " avladı");
+                            if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 8) {
                                 iterator.remove();
                                 break;
                             }
@@ -182,24 +149,25 @@ class OpenAi {
             }   
         }
         // Rapor
+        System.out.println("Kalan Canli Sayisi: " + canlilar.size());
+        System.out.println("*****************************************************");
         System.out.println("Hayvanlarin son durumu:");
         int koyunSayisi = 0, inekSayisi = 0, tavukSayisi = 0, horozSayisi = 0, kurtSayisi = 0, aslanSayisi = 0, avciSayisi = 0;
         for (Canli canli : canlilar) {
-            if (canli instanceof Koyun) koyunSayisi++;
-            else if (canli instanceof Inek) inekSayisi++;
-            else if (canli instanceof Tavuk) tavukSayisi++;
-            else if (canli instanceof Horoz) horozSayisi++;
-            else if (canli instanceof Kurt) kurtSayisi++;
-            else if (canli instanceof Aslan) aslanSayisi++;
-            else if (canli instanceof Avci) avciSayisi++;
+            if (canli.Ad.equals("Koyun")) koyunSayisi++;
+            else if (canli.Ad.equals("Inek")) inekSayisi++;
+            else if (canli.Ad.equals("Tavuk")) tavukSayisi++;
+            else if (canli.Ad.equals("Horoz")) horozSayisi++;
+            else if (canli.Ad.equals("Kurt")) kurtSayisi++;
+            else if (canli.Ad.equals("Aslan")) aslanSayisi++;
+            else if (canli.Ad.equals("Avci")) avciSayisi++;
         }
-        System.out.println("Koyun sayısı: " + koyunSayisi);
-        System.out.println("Inek sayısı: " + inekSayisi);
-        System.out.println("Tavuk sayısı: " + tavukSayisi);
-        System.out.println("Horoz sayısı: " + horozSayisi);
-        System.out.println("Kurt sayısı: " + kurtSayisi);
-        System.out.println("Aslan sayısı: " + aslanSayisi);
-        System.out.println("Avci sayısı: " + avciSayisi);
-        System.out.println(canlilar.size());
+        System.out.println("Koyun sayisi: " + koyunSayisi);
+        System.out.println("Inek sayisi: " + inekSayisi);
+        System.out.println("Tavuk sayisi: " + tavukSayisi);
+        System.out.println("Horoz sayisi: " + horozSayisi);
+        System.out.println("Kurt sayisi: " + kurtSayisi);
+        System.out.println("Aslan sayisi: " + aslanSayisi);
+        System.out.println("Avci sayisi: " + avciSayisi);
     }
 }
