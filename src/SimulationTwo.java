@@ -33,7 +33,7 @@ class Avci extends Canli {
     }
 }
 
-class OpenAi {
+class SimulationTwo {
     public static void main(String[] args) {
         int maxSize = 200;
         ArrayList<Canli> canlilar = new ArrayList<Canli>();
