@@ -35,7 +35,7 @@ class Avci extends Canli {
 
 class SimulationTwo {
     public static void main(String[] args) {
-        int maxSize = 200;
+        int maxSize = 250;
         ArrayList<Canli> canlilar = new ArrayList<Canli>();
         Random random = new Random();
         for (int i = 0; i < 15; i++) {
