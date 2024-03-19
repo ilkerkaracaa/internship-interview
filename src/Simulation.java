@@ -3,68 +3,302 @@ import java.util.Random;
 import java.util.ListIterator;
 
 abstract class Canli {
-    String Ad;
-    int X;
-    int Y;
-    char cinsiyet;
-    int YurumeMesafesi;
+    private String isim;
+    private int xKoordinati;
+    private int yKoordinati;
+    private char cinsiyet;
+    private int yurumeMesafesi;
+    private boolean dogurabilir = true;
 
-    public Canli(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi) {
-        this.Ad = Ad;   
-        this.X = X;
-        this.Y = Y;
+    public Canli(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi) {
+        this.isim = isim;
+        this.xKoordinati = xKoordinati;
+        this.yKoordinati = yKoordinati;
         this.cinsiyet = cinsiyet;
-        this.YurumeMesafesi = YurumeMesafesi;
+        this.yurumeMesafesi = yurumeMesafesi;
+    }
+
+    public String getIsim() {
+        return isim;
+    }
+
+    public int getXKoordinati() {
+        return xKoordinati;
+    }
+
+    public void setXKoordinati(int xKoordinati) {
+        this.xKoordinati += xKoordinati;
+    }
+
+    public int getYKoordinati() {
+        return yKoordinati;
+    }
+
+    public void setYKoordinati(int yKoordinati) {
+        this.yKoordinati += yKoordinati;
+    }
+
+    public char getCinsiyet() {
+        return cinsiyet;
+    }
+
+    public int getYurumeMesafesi() {
+        return yurumeMesafesi;
+    }
+
+    public boolean getDogurabilir() {
+        return dogurabilir;
+    }
+
+    public void setDogurabilir(boolean active) {
+        this.dogurabilir = active;
+    }
+
+    public abstract void hareketEt(Canli canli, Random random);
+    public abstract void Avlan(Canli canli, ListIterator<Canli> iterator, ArrayList<Canli> canlilar);
+    public abstract void Dogum(Canli erkek, ListIterator<Canli> iterator, ArrayList<Canli> canlilar, Random random);
+
+
+    protected void KoordinatlariDegistir(Canli canli, Random random) {
+        for (int i = 0; i < canli.getYurumeMesafesi(); i++) {
+            if (random.nextInt(100) >= 50) {
+                if (canli.getXKoordinati() <= 0) {
+                    //if (random.nextInt(100) >= 50) {
+                    //    canli.setXKoordinati(1);
+                    //}
+                    canli.setXKoordinati(1);
+                } else if (canli.getXKoordinati() >= 500) {
+                    //if (random.nextInt(100) >= 50) {
+                    //    canli.setXKoordinati(-1);
+                    //}
+                    canli.setXKoordinati(-1);
+                } else {
+                    if (random.nextInt(100) >= 50) {
+                        canli.setXKoordinati(-1);
+                    } else {
+                        canli.setXKoordinati(1);
+                    }
+                }
+            } else {
+                if (canli.getYKoordinati() <= 0) {
+                    //if (random.nextInt(100) >= 50) {
+                    //    canli.setYKoordinati(1);
+                    //}
+                    canli.setYKoordinati(1);
+                } else if (canli.getYKoordinati() >= 500) {
+                    //if (random.nextInt(100) >= 50) {
+                    //    canli.setYKoordinati(-1);
+                    //}
+                    canli.setYKoordinati(-1);
+                } else {
+                    if (random.nextInt(100) >= 50) {
+                        canli.setYKoordinati(-1);
+                    } else {
+                        canli.setYKoordinati(1);
+                    }
+                }
+            }
+        }
+    }
+
+    protected void AvlanmaMetodu(Canli av, ListIterator<Canli> iterator, ArrayList<Canli> canlilar) {
+        if(av.getIsim().equals("Koyun") || av.getIsim().equals("Tavuk") || av.getIsim().equals("Horoz")) {
+            for (Canli avci : canlilar) {
+                if(avci.getIsim().equals("Kurt")) {
+                    if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 4) {
+                        System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
+                        iterator.remove();
+                        break;
+                    }
+                } else if(avci.getIsim().equals("Aslan") && av.getIsim().equals("Koyun")) {
+                    if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 5) {
+                        System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
+                        iterator.remove();
+                        break;
+                    }
+                } else if(avci.getIsim().equals("Avci")){
+                    if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 8) {
+                        System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
+                        iterator.remove();
+                        break;
+                    }
+                }
+            }
+        } else if(av.getIsim().equals("Inek")) {
+            for (Canli avci : canlilar) {
+                if(avci.getIsim().equals("Aslan")) {
+                    if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 5) {
+                        System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
+                        iterator.remove();
+                        break;
+                    }
+                } else if(avci.getIsim().equals("Avci")) {
+                    if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 8) {
+                        System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
+                        iterator.remove();
+                        break;
+                    }
+                }
+            }
+        } else if(!av.getIsim().equals("Avci")){
+            for (Canli avci : canlilar) {
+                if(avci.getIsim().equals("Avci")) {
+                    if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 8) {
+                        System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
+                        iterator.remove();
+                        break;
+                    }
+                }
+            }
+        }
+
+    }
+
+    protected void DogumMetodu(Canli erkek, ListIterator<Canli> iterator, ArrayList<Canli> canlilar, Random random) {
+        for (Canli disi : canlilar) {
+            if (erkek.getIsim().equals("Koyun") && erkek.getCinsiyet() == 'E' && disi.getIsim().equals("Koyun") && disi.getCinsiyet() == 'D' && erkek.getDogurabilir() && disi.getDogurabilir()) {
+                if (Math.sqrt(Math.pow(erkek.getXKoordinati() - disi.getXKoordinati(), 2) + Math.pow(erkek.getYKoordinati() - disi.getYKoordinati(), 2)) <= 3) {
+                    System.out.println("Koyun doğdu");
+                    if (random.nextInt(100) >= 50) {
+                        Yavru yavru = new Yavru("Koyun", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'E', 2);
+                        yavru.setDogurabilir(false);
+                        iterator.add(yavru);
+                    } else {
+                        Yavru yavru = new Yavru("Koyun", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'E', 2);
+                        yavru.setDogurabilir(false);
+                        iterator.add(yavru);
+                    }
+                    break;
+                }
+            }
+            if (erkek.getIsim().equals("Kurt") && erkek.getCinsiyet() == 'E' && disi.getIsim().equals("Kurt") && disi.getCinsiyet() == 'D' && erkek.getDogurabilir() && disi.getDogurabilir()) {
+                if (Math.sqrt(Math.pow(erkek.getXKoordinati() - disi.getXKoordinati(), 2) + Math.pow(erkek.getYKoordinati() - disi.getYKoordinati(), 2)) <= 3) {
+                    System.out.println("Kurt doğdu");
+                    if (random.nextInt(100) >= 50) {
+                        Yavru yavru = new Yavru("Kurt", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'E', 3);
+                        yavru.setDogurabilir(false);
+                        iterator.add(yavru);
+                    } else {
+                        Yavru yavru = new Yavru("Koyun", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'D', 3);
+                        yavru.setDogurabilir(false);
+                        iterator.add(yavru);
+                    }
+                    break;
+                }
+            }
+            if (erkek.getIsim().equals("Inek") && erkek.getCinsiyet() == 'E' && disi.getIsim().equals("Inek") && disi.getCinsiyet() == 'D' && erkek.getDogurabilir() && disi.getDogurabilir()) {
+                if (Math.sqrt(Math.pow(erkek.getXKoordinati() - disi.getXKoordinati(), 2) + Math.pow(erkek.getYKoordinati() - disi.getYKoordinati(), 2)) <= 3) {
+                    System.out.println("Inek doğdu");
+                    if (random.nextInt(100) >= 50) {
+                        Yavru yavru = new Yavru("Inek", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'E', 2);
+                        yavru.setDogurabilir(false);
+                        iterator.add(yavru);
+                    } else {
+                        Yavru yavru = new Yavru("Inek", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'D', 2);
+                        yavru.setDogurabilir(false);
+                        iterator.add(yavru);
+                    }
+                    break;
+                }
+            }
+            if (erkek.getIsim().equals("Horoz") && erkek.getCinsiyet() == 'E' && disi.getIsim().equals("Tavuk") && disi.getCinsiyet() == 'D' && erkek.getDogurabilir() && disi.getDogurabilir()) {
+                if (Math.sqrt(Math.pow(erkek.getXKoordinati() - disi.getXKoordinati(), 2) + Math.pow(erkek.getYKoordinati() - disi.getYKoordinati(), 2)) <= 3) {
+                    if (random.nextInt(100) >= 50) {
+                        System.out.println("Horoz doğdu");
+                        Yavru yavru = new Yavru("Horoz", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'E', 1);
+                        yavru.setDogurabilir(false);
+                        iterator.add(yavru);
+                    } else {
+                        System.out.println("Tavuk doğdu");
+                        Yavru yavru = new Yavru("Tavuk", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'D', 1);
+                        yavru.setDogurabilir(false);
+                        iterator.add(yavru);
+                    }
+                    break;
+                }
+            }
+            if (erkek.getIsim().equals("Aslan") && erkek.getCinsiyet() == 'E' && disi.getIsim().equals("Aslan") && disi.getCinsiyet() == 'D' && erkek.getDogurabilir() && disi.getDogurabilir()) {
+                if (Math.sqrt(Math.pow(erkek.getXKoordinati() - disi.getXKoordinati(), 2) + Math.pow(erkek.getYKoordinati() - disi.getYKoordinati(), 2)) <= 3) {
+                    System.out.println("Aslan doğdu");
+                    if (random.nextInt(100) >= 50) {
+                        Yavru yavru = new Yavru("Aslan", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'E', 4);
+                        yavru.setDogurabilir(false);
+                        iterator.add(yavru);
+                    } else {
+                        Yavru yavru = new Yavru("Aslan", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'D', 4);
+                        yavru.setDogurabilir(false);
+                        iterator.add(yavru);
+                    }
+                    break;
+                }
+            }
+        }
     }
 }
 
-class Koyun extends Canli {
-    public Koyun(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi) {
-        super(Ad, X, Y, cinsiyet, YurumeMesafesi);
+class Av extends Canli {
+    public Av(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi) {
+        super(isim, xKoordinati, yKoordinati, cinsiyet, yurumeMesafesi);
+    }
+
+    @Override
+    public void hareketEt(Canli canli, Random random) {
+        KoordinatlariDegistir(canli, random);
+    }
+
+    @Override
+    public void Avlan(Canli canli, ListIterator<Canli> iterator, ArrayList<Canli> canlilar) {
+        AvlanmaMetodu(canli, iterator, canlilar);
+    }
+
+    @Override
+    public void Dogum(Canli erkek, ListIterator<Canli> iterator, ArrayList<Canli> canlilar, Random random) {
+        DogumMetodu(erkek, iterator, canlilar, random);
     }
 }
 
 class Avci extends Canli {
     int AvMesafesi;
-    public Avci(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi, int AvMesafesi) {
-        super(Ad, X, Y, cinsiyet, YurumeMesafesi);
+
+    public Avci(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi, int AvMesafesi) {
+        super(isim, xKoordinati, yKoordinati, cinsiyet, yurumeMesafesi);
         this.AvMesafesi = AvMesafesi;
     }
-}
 
-class Kurt extends Avci {
-    public Kurt(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi, int AvMesafesi) {
-        super(Ad, X, Y, cinsiyet, YurumeMesafesi, AvMesafesi);
+    @Override
+    public void hareketEt(Canli canli, Random random) {
+        KoordinatlariDegistir(canli, random);
+    }
+
+    @Override
+    public void Avlan(Canli canli, ListIterator<Canli> iterator, ArrayList<Canli> canlilar) {
+        AvlanmaMetodu(canli, iterator, canlilar);
+    }
+
+    @Override
+    public void Dogum(Canli erkek, ListIterator<Canli> iterator, ArrayList<Canli> canlilar, Random random) {
+        DogumMetodu(erkek, iterator, canlilar, random);
     }
 }
 
-class Inek extends Canli {
-    public Inek(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi) {
-        super(Ad, X, Y, cinsiyet, YurumeMesafesi);
+class Yavru extends Canli {
+    public Yavru(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi) {
+        super(isim, xKoordinati, yKoordinati, cinsiyet, yurumeMesafesi);
     }
-}
 
-class Tavuk extends Canli {
-    public Tavuk(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi) {
-        super(Ad, X, Y, cinsiyet, YurumeMesafesi);
+    @Override
+    public void hareketEt(Canli canli, Random random) {
+        KoordinatlariDegistir(canli, random);
     }
-}
 
-class Horoz extends Canli {
-    public Horoz(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi) {
-        super(Ad, X, Y, cinsiyet, YurumeMesafesi);
+    @Override
+    public void Avlan(Canli canli, ListIterator<Canli> iterator, ArrayList<Canli> canlilar) {
+        AvlanmaMetodu(canli, iterator, canlilar);
     }
-}
 
-class Aslan extends Avci {
-    public Aslan(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi, int AvMesafesi) {
-        super(Ad, X, Y, cinsiyet, YurumeMesafesi, AvMesafesi);
-    }
-}
-
-class InsanAvci extends Avci {
-    public InsanAvci(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi, int AvMesafesi) {
-        super(Ad, X, Y, cinsiyet, YurumeMesafesi, AvMesafesi);
+    @Override
+    public void Dogum(Canli erkek, ListIterator<Canli> iterator, ArrayList<Canli> canlilar, Random random) {
+        DogumMetodu(erkek, iterator, canlilar, random);
     }
 }
 
@@ -74,154 +308,83 @@ class Simulation {
         ArrayList<Canli> canlilar = new ArrayList<Canli>();
         Random random = new Random();
         for (int i = 0; i < 15; i++) {
-            canlilar.add(new Koyun("Koyun",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 2));
-            canlilar.add(new Koyun("Koyun",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 2));
+            canlilar.add(new Av("Koyun",random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2));
+            canlilar.add(new Av("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2));
         }
 
         for (int i = 0; i < 5; i++) {
-            canlilar.add(new Kurt("Kurt",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 3,4));
-            canlilar.add(new Kurt("Kurt",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 3,4));
+            canlilar.add(new Avci("Kurt", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 3,4));
+            canlilar.add(new Avci("Kurt", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 3,4));
         }
 
         for (int i = 0; i < 5; i++) {
-            canlilar.add(new Inek("Inek",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 2));
-            canlilar.add(new Inek("Inek",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 2));
+            canlilar.add(new Av("Inek", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2));
+            canlilar.add(new Av("Inek", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2));
         }
 
         for (int i = 0; i < 10; i++) {
-            canlilar.add(new Tavuk("Tavuk",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 1));
+            canlilar.add(new Av("Tavuk", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 1));
         }
 
         for (int i = 0; i < 10; i++) {
-            canlilar.add(new Horoz("Horoz",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 1));
+            canlilar.add(new Av("Horoz", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1));
         }
-        
+
         for (int i = 0; i < 4; i++) {
-            canlilar.add(new Aslan("Aslan",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 4, 5));
-            canlilar.add(new Aslan("Aslan",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 4, 5));
+            canlilar.add(new Avci("Aslan", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 4, 5));
+            canlilar.add(new Avci("Aslan", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 4, 5));
         }
-        canlilar.add(new InsanAvci("Avci",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 3, 8));
+        canlilar.add(new Avci("Avci", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1, 8));
+        canlilar.add(new Avci("Avci", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1, 8));
+        canlilar.add(new Avci("Avci", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1, 8));
+        canlilar.add(new Avci("Avci", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1, 8));
 
         System.out.println("*****************************************************");
         System.out.println("Toplam Canli Sayisi: " + canlilar.size());
+        SimulaEt(canlilar, random);
+        // Son durumun raporlanması
+        DurumuRaporla(canlilar);
+    }
+
+    private static void SimulaEt(ArrayList<Canli> canlilar, Random random) {
         for (int i = 0; i < 1000; i++) {
             ListIterator<Canli> iterator = canlilar.listIterator();
             while (iterator.hasNext()) {
-                Canli canli = iterator.next();
-                for (int j = 0 ; j < canli.YurumeMesafesi; j++) {
-                    if(random.nextInt(2) == 0) {
-                        if(canli.X <= 0) {
-                            // if(random.nextInt(2) == 1) {
-                            //     canli.X += 1;
-                            // }
-                            canli.X += 1;
-                        } else if(canli.X >= 500) {
-                            // if(random.nextInt(2) == 0) {
-                            //     canli.X -= 1;
-                            // }
-                            canli.X -= 1;
-                        } else {
-                            if(random.nextInt(2) == 0){
-                                canli.X -= 1;
-                            } else {
-                                canli.X += 1;
-                            }
-                        }
-                    } else {
-                        if(canli.Y <= 0) {
-                            // if(random.nextInt(2) == 1) {
-                            //     canli.Y += 1;
-                            // }
-                            canli.Y += 1;
-                        } else if(canli.Y >= 500) {
-                            // if(random.nextInt(2) == -1) {
-                            //     canli.Y -= 1;
-                            // }
-                            canli.Y -= 1;
-                        } else {
-                            if(random.nextInt(2) == 0){
-                                canli.Y -= 1;
-                            } else {
-                                canli.Y += 1;
-                            }
-                        }
-                    }
-                }
+                Canli av = iterator.next();
+                av.AvlanmaMetodu(av, iterator, canlilar);
             }
-            
             iterator = canlilar.listIterator();
             while (iterator.hasNext()) {
-                Canli av = iterator.next();
-                if(av instanceof Koyun || av instanceof Tavuk || av instanceof Horoz) {
-                    for (Canli avci : canlilar) {
-                        if(avci instanceof Kurt) {
-                            if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 4) {
-                                System.out.println(avci.Ad + " " + av.Ad + " avladi");
-                                iterator.remove();
-                                break;
-                            }
-                        } else if(avci instanceof Aslan && av instanceof Koyun) {
-                            if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 5) {
-                                System.out.println(avci.Ad + " " + av.Ad + " avladi");
-                                iterator.remove();
-                                break;
-                            }
-                        } else if(avci instanceof InsanAvci){
-                            if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 8) {
-                                System.out.println(avci.Ad + " " + av.Ad + " avladi");
-                                iterator.remove();
-                                break;
-                            }
-                        }
-                    }
-                } else if(av instanceof Inek) {
-                    for (Canli avci : canlilar) {
-                        if(avci instanceof Aslan) {
-                            if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 5) {
-                                System.out.println(avci.Ad + " " + av.Ad + " avladi");
-                                iterator.remove();
-                                break;
-                            }
-                        } else if(avci instanceof InsanAvci) {
-                            if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 8) {
-                                System.out.println(avci.Ad + " " + av.Ad + " avladi");
-                                iterator.remove();
-                                break;
-                            }
-                        }
-                    }
-                } else if(av instanceof Aslan || av instanceof Kurt || av instanceof Koyun || av instanceof Tavuk || av instanceof Horoz || av instanceof Inek) {
-                    for (Canli avci : canlilar) {
-                        if(avci instanceof InsanAvci) {
-                            if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 8) {
-                                System.out.println(avci.Ad + " " + av.Ad + " avladi");
-                                iterator.remove();
-                                break;
-                            }
-                        }
-                    }
-                }
-            }   
+                Canli canli = iterator.next();
+                canli.hareketEt(canli, random);
+            }
+            iterator = canlilar.listIterator();
+            while (iterator.hasNext()) {
+                Canli erkek = iterator.next();
+                erkek.DogumMetodu(erkek, iterator, canlilar, random);
+
+            }
         }
-        // Rapor
-        System.out.println("Kalan Canli Sayisi: " + canlilar.size());
-        System.out.println("*****************************************************");
+    }
+    private static void DurumuRaporla(ArrayList<Canli> canlilar) {
+        // Son durumun raporlanması burada yapılacak
         System.out.println("Hayvanlarin son durumu:");
+        System.out.println("Kalan hayvan sayisi:" + canlilar.size());
         int koyunSayisi = 0, inekSayisi = 0, tavukSayisi = 0, horozSayisi = 0, kurtSayisi = 0, aslanSayisi = 0, avciSayisi = 0;
         for (Canli canli : canlilar) {
-            if (canli.Ad.equals("Koyun")) koyunSayisi++;
-            else if (canli.Ad.equals("Inek")) inekSayisi++;
-            else if (canli.Ad.equals("Tavuk")) tavukSayisi++;
-            else if (canli.Ad.equals("Horoz")) horozSayisi++;
-            else if (canli.Ad.equals("Kurt")) kurtSayisi++;
-            else if (canli.Ad.equals("Aslan")) aslanSayisi++;
-            else if (canli.Ad.equals("Avci")) avciSayisi++;
+            if (canli.getIsim().equals("Koyun")) koyunSayisi++;
+            else if (canli.getIsim().equals("Inek")) inekSayisi++;
+            else if (canli.getIsim().equals("Tavuk")) tavukSayisi++;
+            else if (canli.getIsim().equals("Horoz")) horozSayisi++;
+            else if (canli.getIsim().equals("Kurt")) kurtSayisi++;
+            else if (canli.getIsim().equals("Aslan")) aslanSayisi++;
+            else if (canli.getIsim().equals("Avci")) avciSayisi++;
         }
         System.out.println("Koyun sayisi: " + koyunSayisi);
+        System.out.println("Kurt sayisi: " + kurtSayisi);
         System.out.println("Inek sayisi: " + inekSayisi);
         System.out.println("Tavuk sayisi: " + tavukSayisi);
         System.out.println("Horoz sayisi: " + horozSayisi);
-        System.out.println("Kurt sayisi: " + kurtSayisi);
         System.out.println("Aslan sayisi: " + aslanSayisi);
         System.out.println("Avci sayisi: " + avciSayisi);
     }
