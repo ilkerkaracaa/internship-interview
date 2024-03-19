@@ -2,205 +2,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.ListIterator;
 
-/*
-abstract class Canli {
-    private String isim;
-    private int xKoordinati;
-    private int yKoordinati;
-    private char cinsiyet;
-    private int yurumeMesafesi;
-    private  boolean dogurabilir = true;
-
-    public Canli(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi) {
-        this.isim = isim;
-        this.xKoordinati = xKoordinati;
-        this.yKoordinati = yKoordinati;
-        this.cinsiyet = cinsiyet;
-        this.yurumeMesafesi = yurumeMesafesi;
-    }
-
-    // Getter ve setter metotları
-    public String getIsim() {
-        return isim;
-    }
-
-    public int getXKoordinati() {
-        return xKoordinati;
-    }
-
-    public void setXKoordinati(int xKoordinati) {
-        this.xKoordinati += xKoordinati;
-    }
-
-    public int getYKoordinati() {
-        return yKoordinati;
-    }
-
-    public void setYKoordinati(int yKoordinati) {
-        this.yKoordinati += yKoordinati;
-    }
-
-    public char getCinsiyet() {
-        return cinsiyet;
-    }
-
-    public int getYurumeMesafesi() {
-        return yurumeMesafesi;
-    }
-
-    public boolean getDogurabilir(){return this.dogurabilir;}
-
-    public void setDogurabilir(boolean active){this.dogurabilir = active;}
-
-    public abstract void hareketEt(Canli canli, Random random);
-
-
-}
-
-class Av extends Canli {
-
-    public Av(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi) {
-        super(isim, xKoordinati, yKoordinati, cinsiyet, yurumeMesafesi);
-    }
-
-    @Override
-    public void hareketEt(Canli canli, Random random) {
-        for (int j = 0 ; j < canli.getYurumeMesafesi(); j++) {
-            if(random.nextInt(100) >= 50) {
-                if(canli.getXKoordinati() <= 0) {
-                    if(random.nextInt(100) >= 50) {
-                        canli.setXKoordinati(1);
-                    }
-                } else if(canli.getXKoordinati() >= 500) {
-                    if(random.nextInt(100) >= 50) {
-                        canli.setXKoordinati(-1);
-                    }
-                } else {
-                    if(random.nextInt(100) >= 50){
-                        canli.setXKoordinati(-1);
-                    } else {
-                        canli.setXKoordinati(1);
-                    }
-                }
-            } else {
-                if(canli.getYKoordinati() <= 0) {
-                    if(random.nextInt(100) >= 50) {
-                        canli.setYKoordinati(1);
-                    }
-                } else if(canli.getYKoordinati() >= 500) {
-                    if(random.nextInt(100) >= 50) {
-                        canli.setYKoordinati(-1);
-                    }
-                } else {
-                    if(random.nextInt(100) >= 50){
-                        canli.setYKoordinati(-1);
-                    } else {
-                        canli.setYKoordinati(1);
-                    }
-                }
-            }
-        }
-    }
-}
-
-class Avci extends Canli {
-    int AvMesafesi;
-    public Avci(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi, int AvMesafesi) {
-        super(isim, xKoordinati, yKoordinati, cinsiyet, yurumeMesafesi);
-        this.AvMesafesi = AvMesafesi;
-    }
-
-    @Override
-    public void hareketEt(Canli canli, Random random) {
-        for (int j = 0 ; j < canli.getYurumeMesafesi(); j++) {
-            if(random.nextInt(100) >= 50) {
-                if(canli.getXKoordinati() <= 0) {
-                    if(random.nextInt(100) >= 50) {
-                        canli.setXKoordinati(1);
-                    }
-                } else if(canli.getXKoordinati() >= 500) {
-                    if(random.nextInt(100) >= 50) {
-                        canli.setXKoordinati(-1);
-                    }
-                } else {
-                    if(random.nextInt(100) >= 50){
-                        canli.setXKoordinati(-1);
-                    } else {
-                        canli.setXKoordinati(1);
-                    }
-                }
-            } else {
-                if(canli.getYKoordinati() <= 0) {
-                    if(random.nextInt(100) >= 50) {
-                        canli.setYKoordinati(1);
-                    }
-                } else if(canli.getYKoordinati() >= 500) {
-                    if(random.nextInt(100) >= 50) {
-                        canli.setYKoordinati(-1);
-                    }
-                } else {
-                    if(random.nextInt(100) >= 50){
-                        canli.setYKoordinati(-1);
-                    } else {
-                        canli.setYKoordinati(1);
-                    }
-                }
-            }
-        }
-    }
-}
-
-class Yavru extends Canli {
-
-    public Yavru(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi) {
-        super(isim, xKoordinati, yKoordinati, cinsiyet, yurumeMesafesi);
-    }
-
-    @Override
-    public void hareketEt(Canli canli, Random random) {
-        for (int j = 0 ; j < canli.getYurumeMesafesi(); j++) {
-            if(random.nextInt(100) >= 50) {
-                if(canli.getXKoordinati() <= 0) {
-                    if(random.nextInt(100) >= 50) {
-                        canli.setXKoordinati(1);
-                    }
-                } else if(canli.getXKoordinati() >= 500) {
-                    if(random.nextInt(100) >= 50) {
-                        canli.setXKoordinati(-1);
-                    }
-                } else {
-                    if(random.nextInt(100) >= 50){
-                        canli.setXKoordinati(-1);
-                    } else {
-                        canli.setXKoordinati(1);
-                    }
-                }
-            } else {
-                if(canli.getYKoordinati() <= 0) {
-                    if(random.nextInt(100) >= 50) {
-                        canli.setYKoordinati(1);
-                    }
-                } else if(canli.getYKoordinati() >= 500) {
-                    if(random.nextInt(100) >= 50) {
-                        canli.setYKoordinati(-1);
-                    }
-                } else {
-                    if(random.nextInt(100) >= 50){
-                        canli.setYKoordinati(-1);
-                    } else {
-                        canli.setYKoordinati(1);
-                    }
-                }
-            }
-        }
-    }
-}*/
-
-
-
-
-import java.util.Random;
-
 abstract class Canli {
     private String isim;
     private int xKoordinati;
@@ -255,35 +56,40 @@ abstract class Canli {
 
     public abstract void hareketEt(Canli canli, Random random);
 
-    protected void hareketEtKoordinat(Canli canli, Random random, boolean isXKoordinati) {
-        int koordinat = isXKoordinati ? canli.getXKoordinati() : canli.getYKoordinati();
-        if (random.nextInt(100) >= 50) {
-            if (koordinat <= 0) {
-                if (random.nextInt(100) >= 50) {
-                    if (isXKoordinati) {
-                        canli.setXKoordinati(1);
-                    } else {
-                        canli.setYKoordinati(1);
-                    }
-                }
-            } else if (koordinat >= 500) {
-                if (random.nextInt(100) >= 50) {
-                    if (isXKoordinati) {
+    protected void KoordinatlariDegistir(Canli canli, Random random) {
+        for (int i = 0; i < canli.getYurumeMesafesi(); i++) {
+            if (random.nextInt(100) >= 50) {
+                if (canli.getXKoordinati() <= 0) {
+                    //if (random.nextInt(100) >= 50) {
+                    //    canli.setXKoordinati(1);
+                    //}
+                    canli.setXKoordinati(1);
+                } else if (canli.getXKoordinati() >= 500) {
+                    //if (random.nextInt(100) >= 50) {
+                    //    canli.setXKoordinati(-1);
+                    //}
+                    canli.setXKoordinati(-1);
+                } else {
+                    if (random.nextInt(100) >= 50) {
                         canli.setXKoordinati(-1);
                     } else {
-                        canli.setYKoordinati(-1);
+                        canli.setXKoordinati(1);
                     }
                 }
             } else {
-                if (random.nextInt(100) >= 50) {
-                    if (isXKoordinati) {
-                        canli.setXKoordinati(-1);
-                    } else {
-                        canli.setYKoordinati(-1);
-                    }
+                if (canli.getYKoordinati() <= 0) {
+                    //if (random.nextInt(100) >= 50) {
+                    //    canli.setYKoordinati(1);
+                    //}
+                    canli.setYKoordinati(1);
+                } else if (canli.getYKoordinati() >= 500) {
+                    //if (random.nextInt(100) >= 50) {
+                    //    canli.setYKoordinati(-1);
+                    //}
+                    canli.setYKoordinati(-1);
                 } else {
-                    if (isXKoordinati) {
-                        canli.setXKoordinati(1);
+                    if (random.nextInt(100) >= 50) {
+                        canli.setYKoordinati(-1);
                     } else {
                         canli.setYKoordinati(1);
                     }
@@ -300,10 +106,7 @@ class Av extends Canli {
 
     @Override
     public void hareketEt(Canli canli, Random random) {
-        for (int j = 0; j < canli.getYurumeMesafesi(); j++) {
-            hareketEtKoordinat(canli, random, true); // X koordinatı için hareket
-            hareketEtKoordinat(canli, random, false); // Y koordinatı için hareket
-        }
+        KoordinatlariDegistir(canli, random);
     }
 }
 
@@ -317,10 +120,7 @@ class Avci extends Canli {
 
     @Override
     public void hareketEt(Canli canli, Random random) {
-        for (int j = 0; j < canli.getYurumeMesafesi(); j++) {
-            hareketEtKoordinat(canli, random, true); // X koordinatı için hareket
-            hareketEtKoordinat(canli, random, false); // Y koordinatı için hareket
-        }
+        KoordinatlariDegistir(canli, random);
     }
 }
 
@@ -331,14 +131,9 @@ class Yavru extends Canli {
 
     @Override
     public void hareketEt(Canli canli, Random random) {
-        for (int j = 0; j < canli.getYurumeMesafesi(); j++) {
-            hareketEtKoordinat(canli, random, true); // X koordinatı için hareket
-            hareketEtKoordinat(canli, random, false); // Y koordinatı için hareket
-        }
+        KoordinatlariDegistir(canli, random);
     }
 }
-
-
 
 class SimulationTwo {
     public static void main(String[] args) {
