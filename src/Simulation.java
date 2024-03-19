@@ -62,9 +62,15 @@ class Aslan extends Avci {
     }
 }
 
+class InsanAvci extends Avci {
+    public InsanAvci(String Ad, int X, int Y, char cinsiyet, int YurumeMesafesi, int AvMesafesi) {
+        super(Ad, X, Y, cinsiyet, YurumeMesafesi, AvMesafesi);
+    }
+}
+
 class Simulation {
     public static void main(String[] args) {
-        int maxSize = 100;
+        int maxSize = 500;
         ArrayList<Canli> canlilar = new ArrayList<Canli>();
         Random random = new Random();
         for (int i = 0; i < 15; i++) {
@@ -94,7 +100,7 @@ class Simulation {
             canlilar.add(new Aslan("Aslan",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 4, 5));
             canlilar.add(new Aslan("Aslan",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'D', 4, 5));
         }
-        canlilar.add(new Avci("Avci",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 3, 8));
+        canlilar.add(new InsanAvci("Avci",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 3, 8));
 
         System.out.println("*****************************************************");
         System.out.println("Toplam Canli Sayisi: " + canlilar.size());
@@ -146,21 +152,21 @@ class Simulation {
             iterator = canlilar.listIterator();
             while (iterator.hasNext()) {
                 Canli av = iterator.next();
-                if(av.Ad.equals("Koyun") || av.Ad.equals("Tavuk") || av.Ad.equals("Horoz")) {
+                if(av instanceof Koyun || av instanceof Tavuk || av instanceof Horoz) {
                     for (Canli avci : canlilar) {
-                        if(avci.Ad.equals("Kurt")) {
+                        if(avci instanceof Kurt) {
                             if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 4) {
                                 System.out.println(avci.Ad + " " + av.Ad + " avladi");
                                 iterator.remove();
                                 break;
                             }
-                        } else if(avci.Ad.equals("Aslan") && av.Ad.equals("Koyun")) {
+                        } else if(avci instanceof Aslan && av instanceof Koyun) {
                             if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 5) {
                                 System.out.println(avci.Ad + " " + av.Ad + " avladi");
                                 iterator.remove();
                                 break;
                             }
-                        } else if(avci.Ad.equals("Avci")){
+                        } else if(avci instanceof InsanAvci){
                             if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 8) {
                                 System.out.println(avci.Ad + " " + av.Ad + " avladi");
                                 iterator.remove();
@@ -168,15 +174,15 @@ class Simulation {
                             }
                         }
                     }
-                } else if(av.Ad.equals("Inek")) {
+                } else if(av instanceof Inek) {
                     for (Canli avci : canlilar) {
-                        if(avci.Ad.equals("Aslan")) {
+                        if(avci instanceof Aslan) {
                             if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 5) {
                                 System.out.println(avci.Ad + " " + av.Ad + " avladi");
                                 iterator.remove();
                                 break;
                             }
-                        } else if(avci.Ad.equals("Avci")) {
+                        } else if(avci instanceof InsanAvci) {
                             if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 8) {
                                 System.out.println(avci.Ad + " " + av.Ad + " avladi");
                                 iterator.remove();
@@ -184,9 +190,9 @@ class Simulation {
                             }
                         }
                     }
-                } else if(!av.Ad.equals("Avci")){
+                } else if(av instanceof Aslan || av instanceof Kurt || av instanceof Koyun || av instanceof Tavuk || av instanceof Horoz || av instanceof Inek) {
                     for (Canli avci : canlilar) {
-                        if(avci.Ad.equals("Avci")) {
+                        if(avci instanceof InsanAvci) {
                             if(Math.sqrt(Math.pow(avci.X - av.X, 2) + Math.pow(avci.Y - av.Y, 2)) <= 8) {
                                 System.out.println(avci.Ad + " " + av.Ad + " avladi");
                                 iterator.remove();
