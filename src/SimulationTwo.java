@@ -35,7 +35,7 @@ class Avci extends Canli {
 
 class SimulationTwo {
     public static void main(String[] args) {
-        int maxSize = 250;
+        int maxSize = 100;
         ArrayList<Canli> canlilar = new ArrayList<Canli>();
         Random random = new Random();
         for (int i = 0; i < 15; i++) {
@@ -68,7 +68,7 @@ class SimulationTwo {
         canlilar.add(new Avci("Avci",(int)random.nextInt(maxSize), (int)random.nextInt(maxSize), 'E', 3, 8));
         System.out.println("*****************************************************");
         System.out.println("Toplam Canli Sayisi: " + canlilar.size());
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1; i++) {
             ListIterator<Canli> iterator = canlilar.listIterator();
             while (iterator.hasNext()) {
                 Canli canli = iterator.next();
@@ -125,7 +125,6 @@ class SimulationTwo {
                             }
                         }
                     }
-                    
                 } else if(av.Ad.equals("Koyun") || av.Ad.equals("Inek")) {
                     for (Canli avci : canlilar) {
                         if(avci.Ad.equals("Aslan")) {
@@ -135,7 +134,6 @@ class SimulationTwo {
                             }
                         }
                     }
-                    
                 } else if(!av.Ad.equals("Avci")){
                     for (Canli avci : canlilar) {
                         if(avci.Ad.equals("Avci")) {
@@ -146,7 +144,98 @@ class SimulationTwo {
                         }
                     }
                 }
-            }   
+            }
+
+            ListIterator<Canli> iteratorTwo = canlilar.listIterator();
+            while (iteratorTwo.hasNext()) {
+                Canli erkek = iteratorTwo.next();
+                if (erkek.Ad.equals("Koyun") && erkek.cinsiyet == 'E') {
+                   ListIterator<Canli> innerIterator = canlilar.listIterator();
+                    while (innerIterator.hasNext()) {
+                        Canli disi = innerIterator.next();
+                        if (disi.Ad.equals("Koyun") && disi.cinsiyet == 'D') {
+                            double distance = Math.sqrt(Math.pow(erkek.X - disi.X, 2) + Math.pow(erkek.Y - disi.Y, 2));
+                            if (distance <= 3) {
+                                System.out.println("Koyunlarin ciftlesmesi");
+                                if (random.nextInt(2) == 0) {
+                                    iteratorTwo.add(new Av("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2));
+                                } else {
+                                    iteratorTwo.add(new Av("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2));
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }else if (erkek.Ad.equals("Kurt") && erkek.cinsiyet == 'E') {
+                    ListIterator<Canli> innerIterator = canlilar.listIterator();
+                    while (innerIterator.hasNext()) {
+                        Canli disi = innerIterator.next();
+                        if (disi.Ad.equals("Kurt") && disi.cinsiyet == 'D') {
+                            double distance = Math.sqrt(Math.pow(erkek.X - disi.X, 2) + Math.pow(erkek.Y - disi.Y, 2));
+                            if (distance <= 3) {
+                                System.out.println("Kurtlarin ciftlesmesi");
+                                if (random.nextInt(2) == 0) {
+                                    iteratorTwo.add(new Avci("Kurt", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 3,4));
+                                } else {
+                                    iteratorTwo.add(new Avci("Kurt", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 3,4));
+                                }
+                                break;
+                            }
+                        }
+                    }
+                } else if (erkek.Ad.equals("Inek") && erkek.cinsiyet == 'E') {
+                    ListIterator<Canli> innerIterator = canlilar.listIterator();
+                    while (innerIterator.hasNext()) {
+                        Canli disi = innerIterator.next();
+                        if (disi.Ad.equals("Inek") && disi.cinsiyet == 'D') {
+                            double distance = Math.sqrt(Math.pow(erkek.X - disi.X, 2) + Math.pow(erkek.Y - disi.Y, 2));
+                            if (distance <= 3) {
+                                System.out.println("Ineklerin ciftlesmesi");
+                                if (random.nextInt(2) == 0) {
+                                    iteratorTwo.add(new Av("Inek", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2));
+                                } else {
+                                    iteratorTwo.add(new Av("Inek", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2));
+                                }
+                                break;
+                            }
+                        }
+                    }
+                } else if (erkek.Ad.equals("Horoz") && erkek.cinsiyet == 'E') {
+                    ListIterator<Canli> innerIterator = canlilar.listIterator();
+                    while (innerIterator.hasNext()) {
+                        Canli disi = innerIterator.next();
+                        if (disi.Ad.equals("Tavuk") && disi.cinsiyet == 'D') {
+                            double distance = Math.sqrt(Math.pow(erkek.X - disi.X, 2) + Math.pow(erkek.Y - disi.Y, 2));
+                            if (distance <= 3) {
+                                System.out.println("Tavuklarin ciftlesmesi");
+                                if (random.nextInt(2) == 0) {
+                                    iteratorTwo.add(new Av("Tavuk", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 1));
+                                } else {
+                                    iteratorTwo.add(new Av("Horoz", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1));
+                                }
+                                break;
+                            }
+                        }
+                    }
+                } else if (erkek.Ad.equals("Aslan") && erkek.cinsiyet == 'E') {
+                    ListIterator<Canli> innerIterator = canlilar.listIterator();
+                    while (innerIterator.hasNext()) {
+                        Canli disi = innerIterator.next();
+                        if (disi.Ad.equals("Aslan") && disi.cinsiyet == 'D') {
+                            double distance = Math.sqrt(Math.pow(erkek.X - disi.X, 2) + Math.pow(erkek.Y - disi.Y, 2));
+                            if (distance <= 3) {
+                                System.out.println("Aslanlarin ciftlesmesi");
+                                if (random.nextInt(2) == 0) {
+                                    iteratorTwo.add(new Avci("Aslan", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 4, 5));
+                                } else {
+                                    iteratorTwo.add(new Avci("Aslan", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 4, 5));
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
         // Rapor
         System.out.println("Kalan Canli Sayisi: " + canlilar.size());
@@ -163,10 +252,10 @@ class SimulationTwo {
             else if (canli.Ad.equals("Avci")) avciSayisi++;
         }
         System.out.println("Koyun sayisi: " + koyunSayisi);
+        System.out.println("Kurt sayisi: " + kurtSayisi);
         System.out.println("Inek sayisi: " + inekSayisi);
         System.out.println("Tavuk sayisi: " + tavukSayisi);
         System.out.println("Horoz sayisi: " + horozSayisi);
-        System.out.println("Kurt sayisi: " + kurtSayisi);
         System.out.println("Aslan sayisi: " + aslanSayisi);
         System.out.println("Avci sayisi: " + avciSayisi);
     }
