@@ -61,15 +61,13 @@ class Av extends Canli {
         for (int j = 0 ; j < canli.getYurumeMesafesi(); j++) {
             if(random.nextInt(100) >= 50) {
                 if(canli.getXKoordinati() <= 0) {
-                    // if(random.nextInt(2) == 1) {
-                    //     canli.X += 1;
-                    // }
-                    canli.setXKoordinati(1);
+                    if(random.nextInt(100) >= 50) {
+                        canli.setXKoordinati(1);
+                    }
                 } else if(canli.getXKoordinati() >= 500) {
-                    // if(random.nextInt(2) == 0) {
-                    //     canli.X -= 1;
-                    // }
-                    canli.setXKoordinati(-1);
+                    if(random.nextInt(100) >= 50) {
+                        canli.setXKoordinati(-1);
+                    }
                 } else {
                     if(random.nextInt(100) >= 50){
                         canli.setXKoordinati(-1);
@@ -79,15 +77,13 @@ class Av extends Canli {
                 }
             } else {
                 if(canli.getYKoordinati() <= 0) {
-                    // if(random.nextInt(2) == 1) {
-                    //     canli.Y += 1;
-                    // }
-                    canli.setYKoordinati(1);
+                    if(random.nextInt(100) >= 50) {
+                        canli.setYKoordinati(1);
+                    }
                 } else if(canli.getYKoordinati() >= 500) {
-                    // if(random.nextInt(2) == -1) {
-                    //     canli.Y -= 1;
-                    // }
-                    canli.setYKoordinati(-1);
+                    if(random.nextInt(100) >= 50) {
+                        canli.setYKoordinati(-1);
+                    }
                 } else {
                     if(random.nextInt(100) >= 50){
                         canli.setYKoordinati(-1);
@@ -112,15 +108,13 @@ class Avci extends Canli {
         for (int j = 0 ; j < canli.getYurumeMesafesi(); j++) {
             if(random.nextInt(100) >= 50) {
                 if(canli.getXKoordinati() <= 0) {
-                    // if(random.nextInt(2) == 1) {
-                    //     canli.X += 1;
-                    // }
-                    canli.setXKoordinati(1);
+                    if(random.nextInt(100) >= 50) {
+                        canli.setXKoordinati(1);
+                    }
                 } else if(canli.getXKoordinati() >= 500) {
-                    // if(random.nextInt(2) == 0) {
-                    //     canli.X -= 1;
-                    // }
-                    canli.setXKoordinati(-1);
+                    if(random.nextInt(100) >= 50) {
+                        canli.setXKoordinati(-1);
+                    }
                 } else {
                     if(random.nextInt(100) >= 50){
                         canli.setXKoordinati(-1);
@@ -130,15 +124,13 @@ class Avci extends Canli {
                 }
             } else {
                 if(canli.getYKoordinati() <= 0) {
-                    // if(random.nextInt(2) == 1) {
-                    //     canli.Y += 1;
-                    // }
-                    canli.setYKoordinati(1);
+                    if(random.nextInt(100) >= 50) {
+                        canli.setYKoordinati(1);
+                    }
                 } else if(canli.getYKoordinati() >= 500) {
-                    // if(random.nextInt(2) == -1) {
-                    //     canli.Y -= 1;
-                    // }
-                    canli.setYKoordinati(-1);
+                    if(random.nextInt(100) >= 50) {
+                        canli.setYKoordinati(-1);
+                    }
                 } else {
                     if(random.nextInt(100) >= 50){
                         canli.setYKoordinati(-1);
@@ -148,6 +140,17 @@ class Avci extends Canli {
                 }
             }
         }
+    }
+}
+
+class Yavru extends Canli {
+    public Yavru(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi) {
+        super(isim, xKoordinati, yKoordinati, cinsiyet, yurumeMesafesi);
+    }
+
+    @Override
+    public void hareketEt(Canli canli, Random random) {
+
     }
 }
 
@@ -254,9 +257,9 @@ class SimulationTwo {
                         if (Math.sqrt(Math.pow(erkek.getXKoordinati() - disi.getXKoordinati(), 2) + Math.pow(erkek.getYKoordinati() - disi.getYKoordinati(), 2)) <= 3) {
                             System.out.println("Koyun doğdu");
                             if (random.nextInt(100) >= 50) {
-                                iterator.add(new Av("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2));
+                                iterator.add(new Yavru("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2));
                             } else {
-                                iterator.add(new Av("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2));
+                                iterator.add(new Yavru("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2));
                             }
                             break;
                         }
@@ -265,9 +268,9 @@ class SimulationTwo {
                         if (Math.sqrt(Math.pow(erkek.getXKoordinati() - disi.getXKoordinati(), 2) + Math.pow(erkek.getYKoordinati() - disi.getYKoordinati(), 2)) <= 3) {
                             System.out.println("Kurt doğdu");
                             if (random.nextInt(100) >= 50) {
-                                iterator.add(new Avci("Kurt", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 3,4));
+                                iterator.add(new Yavru("Kurt", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 3));
                             } else {
-                                iterator.add(new Avci("Kurt", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 3,4));
+                                iterator.add(new Yavru("Kurt", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 3));
                             }
                             break;
                         }
@@ -276,9 +279,9 @@ class SimulationTwo {
                         if (Math.sqrt(Math.pow(erkek.getXKoordinati() - disi.getXKoordinati(), 2) + Math.pow(erkek.getYKoordinati() - disi.getYKoordinati(), 2)) <= 3) {
                             System.out.println("Inek doğdu");
                             if (random.nextInt(100) >= 50) {
-                                iterator.add(new Av("Inek", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2));
+                                iterator.add(new Yavru("Inek", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2));
                             } else {
-                                iterator.add(new Av("Inek", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2));
+                                iterator.add(new Yavru("Inek", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2));
                             }
                             break;
                         }
@@ -286,10 +289,10 @@ class SimulationTwo {
                     if (erkek.getIsim().equals("Horoz") && erkek.getCinsiyet() == 'E' && disi.getIsim().equals("Tavuk") && disi.getCinsiyet() == 'D') {
                         if (Math.sqrt(Math.pow(erkek.getXKoordinati() - disi.getXKoordinati(), 2) + Math.pow(erkek.getYKoordinati() - disi.getYKoordinati(), 2)) <= 3) {
                             if (random.nextInt(100) >= 50) {
-                                iterator.add(new Av("Horoz", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1));
+                                iterator.add(new Yavru("Horoz", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1));
                                 System.out.println("Horoz doğdu");
                             } else {
-                                iterator.add(new Av("Tavuk", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 1));
+                                iterator.add(new Yavru("Tavuk", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 1));
                                 System.out.println("Tavuk doğdu");
                             }
                             break;
@@ -299,9 +302,9 @@ class SimulationTwo {
                         if (Math.sqrt(Math.pow(erkek.getXKoordinati() - disi.getXKoordinati(), 2) + Math.pow(erkek.getYKoordinati() - disi.getYKoordinati(), 2)) <= 3) {
                             System.out.println("Aslan doğdu");
                             if (random.nextInt(100) >= 50) {
-                                iterator.add(new Avci("Aslan", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 4,5));
+                                iterator.add(new Yavru("Aslan", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 4));
                             } else {
-                                iterator.add(new Avci("Aslan", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 4,5));
+                                iterator.add(new Yavru("Aslan", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 4));
                             }
                             break;
                         }
