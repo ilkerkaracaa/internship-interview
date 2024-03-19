@@ -12,5 +12,4 @@
   
  * Yavru: Diğer canlıların yavrularını temsil eder. Hareket etme davranışlarını içerir ancak avlanma ve doğum yapma davranışlarını içermez.
 
- * Simulasyon: Canlıların etkileşimlerini simüle eder. Belirli bir süre boyunca canlıların hareket etmesini,
- * avlanmasını ve doğum yapmasını sağlar. Ayrıca, simülasyon sonunda kalan canlıları ve türlerine göre sayılarını raporlar.
+ * Simulasyon: Canlıların etkileşimlerini simüle eder. Belirli bir süre boyunca canlıların hareket etmesini, avlanmasını ve doğum yapmasını sağlar. Ayrıca, simülasyon sonunda kalan canlıları ve türlerine göre sayılarını raporlar.
