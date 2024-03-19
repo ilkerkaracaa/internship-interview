@@ -47,8 +47,6 @@ abstract class Canli {
     }
 
     public abstract void hareketEt(Canli canli, Random random);
-
-
 }
 
 class Av extends Canli {
