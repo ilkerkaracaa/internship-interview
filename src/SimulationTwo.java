@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.ListIterator;
 
+/*
 abstract class Canli {
     private String isim;
     private int xKoordinati;
@@ -193,7 +194,150 @@ class Yavru extends Canli {
             }
         }
     }
+}*/
+
+
+
+
+import java.util.Random;
+
+abstract class Canli {
+    private String isim;
+    private int xKoordinati;
+    private int yKoordinati;
+    private char cinsiyet;
+    private int yurumeMesafesi;
+    private boolean dogurabilir = true;
+
+    public Canli(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi) {
+        this.isim = isim;
+        this.xKoordinati = xKoordinati;
+        this.yKoordinati = yKoordinati;
+        this.cinsiyet = cinsiyet;
+        this.yurumeMesafesi = yurumeMesafesi;
+    }
+
+    public String getIsim() {
+        return isim;
+    }
+
+    public int getXKoordinati() {
+        return xKoordinati;
+    }
+
+    public void setXKoordinati(int xKoordinati) {
+        this.xKoordinati += xKoordinati;
+    }
+
+    public int getYKoordinati() {
+        return yKoordinati;
+    }
+
+    public void setYKoordinati(int yKoordinati) {
+        this.yKoordinati += yKoordinati;
+    }
+
+    public char getCinsiyet() {
+        return cinsiyet;
+    }
+
+    public int getYurumeMesafesi() {
+        return yurumeMesafesi;
+    }
+
+    public boolean getDogurabilir() {
+        return dogurabilir;
+    }
+
+    public void setDogurabilir(boolean active) {
+        this.dogurabilir = active;
+    }
+
+    public abstract void hareketEt(Canli canli, Random random);
+
+    protected void hareketEtKoordinat(Canli canli, Random random, boolean isXKoordinati) {
+        int koordinat = isXKoordinati ? canli.getXKoordinati() : canli.getYKoordinati();
+        if (random.nextInt(100) >= 50) {
+            if (koordinat <= 0) {
+                if (random.nextInt(100) >= 50) {
+                    if (isXKoordinati) {
+                        canli.setXKoordinati(1);
+                    } else {
+                        canli.setYKoordinati(1);
+                    }
+                }
+            } else if (koordinat >= 500) {
+                if (random.nextInt(100) >= 50) {
+                    if (isXKoordinati) {
+                        canli.setXKoordinati(-1);
+                    } else {
+                        canli.setYKoordinati(-1);
+                    }
+                }
+            } else {
+                if (random.nextInt(100) >= 50) {
+                    if (isXKoordinati) {
+                        canli.setXKoordinati(-1);
+                    } else {
+                        canli.setYKoordinati(-1);
+                    }
+                } else {
+                    if (isXKoordinati) {
+                        canli.setXKoordinati(1);
+                    } else {
+                        canli.setYKoordinati(1);
+                    }
+                }
+            }
+        }
+    }
 }
+
+class Av extends Canli {
+    public Av(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi) {
+        super(isim, xKoordinati, yKoordinati, cinsiyet, yurumeMesafesi);
+    }
+
+    @Override
+    public void hareketEt(Canli canli, Random random) {
+        for (int j = 0; j < canli.getYurumeMesafesi(); j++) {
+            hareketEtKoordinat(canli, random, true); // X koordinatı için hareket
+            hareketEtKoordinat(canli, random, false); // Y koordinatı için hareket
+        }
+    }
+}
+
+class Avci extends Canli {
+    int AvMesafesi;
+
+    public Avci(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi, int AvMesafesi) {
+        super(isim, xKoordinati, yKoordinati, cinsiyet, yurumeMesafesi);
+        this.AvMesafesi = AvMesafesi;
+    }
+
+    @Override
+    public void hareketEt(Canli canli, Random random) {
+        for (int j = 0; j < canli.getYurumeMesafesi(); j++) {
+            hareketEtKoordinat(canli, random, true); // X koordinatı için hareket
+            hareketEtKoordinat(canli, random, false); // Y koordinatı için hareket
+        }
+    }
+}
+
+class Yavru extends Canli {
+    public Yavru(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi) {
+        super(isim, xKoordinati, yKoordinati, cinsiyet, yurumeMesafesi);
+    }
+
+    @Override
+    public void hareketEt(Canli canli, Random random) {
+        for (int j = 0; j < canli.getYurumeMesafesi(); j++) {
+            hareketEtKoordinat(canli, random, true); // X koordinatı için hareket
+            hareketEtKoordinat(canli, random, false); // Y koordinatı için hareket
+        }
+    }
+}
+
 
 
 class SimulationTwo {
@@ -229,9 +373,14 @@ class SimulationTwo {
             canlilar.add(new Avci("Aslan", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 4, 5));
         }
         canlilar.add(new Avci("Avci", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1, 8));
-
         System.out.println("*****************************************************");
         System.out.println("Toplam Canli Sayisi: " + canlilar.size());
+        Simulate(canlilar, random);
+        // Son durumun raporlanması
+        ReportStatus(canlilar);
+    }
+
+    private static void Simulate(ArrayList<Canli> canlilar, Random random) {
         for (int i = 0; i < 1000; i++) {
             ListIterator<Canli> iterator = canlilar.listIterator();
             while (iterator.hasNext()) {
@@ -374,7 +523,9 @@ class SimulationTwo {
                 }
             }
         }
-
+    }
+    private static void ReportStatus(ArrayList<Canli> canlilar) {
+        // Son durumun raporlanması burada yapılacak
         System.out.println("Hayvanlarin son durumu:");
         System.out.println("Kalan hayvan sayisi:" + canlilar.size());
         int koyunSayisi = 0, inekSayisi = 0, tavukSayisi = 0, horozSayisi = 0, kurtSayisi = 0, aslanSayisi = 0, avciSayisi = 0;
