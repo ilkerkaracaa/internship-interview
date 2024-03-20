@@ -355,7 +355,7 @@ class Simulasyon {
     public static void main(String[] args) {
         // Simulasyonun baslangicinda canlilarin olusturulmasi
         int maxSize = 500;
-        // Canlilarin olusturulmasi
+        // alan siniri belirlendi
         ArrayList<Canli> canlilar = new ArrayList<>();
         Random random = new Random();
         // Canlilarin olusturulmasi
