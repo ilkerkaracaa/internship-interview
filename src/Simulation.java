@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.ListIterator;
 
+//Soyut bir canli sinifi olusturuldu. Bu sinifin altinda av, avci ve yavru siniflari olusturuldu.
+//Bu siniflarin hepsi Canli sinifindan turetilmistir. Canli sinifinda avlanma, dogum ve hareket etme metotlari soyut olarak tanimlandi.
+//Bu metotlarin her biri alt siniflar tarafindan override edilerek kullanildi.
 abstract class Canli {
     private final String isim;
     private int xKoordinati;
@@ -63,26 +66,33 @@ abstract class Canli {
     public void setAvlayabilir(boolean durum) {
         this.avlayabilirMi = durum;
     }
-
+    //Avlanma metodu, avcilarin avlarini avlamasi icin kullanildi. Dogum metodu, disi ve erkek canlilarin yavrularini dogurmasi icin kullanildi.
     public abstract void hareketEt(Canli canli, Random random);
     public abstract void Avlan(Canli canli, ListIterator<Canli> iterator, ArrayList<Canli> canlilar);
     public abstract void Dogum(Canli erkek, ListIterator<Canli> iterator, ArrayList<Canli> canlilar, Random random);
 
 
     protected void KoordinatlariDegistir(Canli canli, Random random) {
+        // Canlinin yurume mesafesi kadar rastgele bir yone hareket etmesi saglandi.
         for (int i = 0; i < canli.getYurumeMesafesi(); i++) {
+            // Rastgele bir yone hareket etmesi saglandi.
+            // Eger rastgele bir sayi 50'den buyukse x koordinatlarini degistirir.
+            // Eger rastgele bir sayi 50'den kucukse y koordinatlarini degistirir.
             if (random.nextInt(100) >= 50) {
                 if (canli.getXKoordinati() <= 0) {
                     //if (random.nextInt(100) >= 50) {
                     //    canli.setXKoordinati(1);
                     //}
+                    // Eger canlinin x koordinati 0'dan kucukse 1 arttirir.
                     canli.setXKoordinati(1);
                 } else if (canli.getXKoordinati() >= 500) {
                     //if (random.nextInt(100) >= 50) {
                     //    canli.setXKoordinati(-1);
                     //}
+                    // Eger canlinin x koordinati 500'den buyukse 1 azaltir.
                     canli.setXKoordinati(-1);
                 } else {
+                    // Sinir kosullarina takilmazsa rastgele bir yone hareket eder.
                     if (random.nextInt(100) >= 50) {
                         canli.setXKoordinati(-1);
                     } else {
@@ -90,6 +100,7 @@ abstract class Canli {
                     }
                 }
             } else {
+                // Eger rastgele bir sayi 50'den kucukse y koordinatlarini degistirir.
                 if (canli.getYKoordinati() <= 0) {
                     //if (random.nextInt(100) >= 50) {
                     //    canli.setYKoordinati(1);
@@ -112,21 +123,30 @@ abstract class Canli {
     }
 
     protected void AvlanmaMetodu(Canli av, ListIterator<Canli> iterator, ArrayList<Canli> canlilar) {
+        // Eger av koyun, tavuk veya horoz ise avcilarin avlarini avlamasi saglandi.
         if(av.getIsim().equals("Koyun") || av.getIsim().equals("Tavuk") || av.getIsim().equals("Horoz")) {
             for (Canli avci : canlilar) {
+                // Eger avci kurt ise ve avlayabilir durumda ise avlarini avlar.
                 if(avci.getIsim().equals("Kurt") && avci.getAvlayabilir()) {
+                    // Eger avci ve av arasindaki mesafe 3'ten kucukse avlanir.
                     if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 4) {
                         System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
+                        // Avlanan listeden cikarilir.
                         iterator.remove();
                         break;
                     }
+                    // Eger avci aslan ise ve avlayabilir durumda ise avlarini avlar.
                 } else if(avci.getIsim().equals("Aslan") && av.getIsim().equals("Koyun") && avci.getAvlayabilir()) {
+                    // Eger avci ve av arasindaki mesafe 5'ten kucukse avlanir.
                     if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 5) {
+                        // Avlanan listeden cikarilir.
                         System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
                         iterator.remove();
                         break;
                     }
+                    // Eger avci ise ve avlayabilir durumda ise avlarini avlar.
                 } else if(avci.getIsim().equals("Avci") && avci.getAvlayabilir()){
+                    // Eger avci ve av arasindaki mesafe 8'den kucukse avlanir.
                     if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 8) {
                         System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
                         iterator.remove();
@@ -134,16 +154,21 @@ abstract class Canli {
                     }
                 }
             }
+            // Eger av inek ise avcilarin avlarini avlamasi saglandi.
         } else if(av.getIsim().equals("Inek")) {
             for (Canli avci : canlilar) {
+                // Eger avci Aslan ise ve avlayabilir durumda ise avlarini avlar.
                 if(avci.getIsim().equals("Aslan") && avci.getAvlayabilir()) {
+                    // Eger avci ve av arasindaki mesafe 5'ten kucukse avlanir.
                     if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 5) {
                         System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
                         iterator.remove();
                         break;
                     }
+                    // Eger avci ise ve avlayabilir durumda ise avlarini avlar.
                 } else if(avci.getIsim().equals("Avci") && avci.getAvlayabilir()) {
                     if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 8) {
+                        // Avlanan listeden cikarilir.
                         System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
                         iterator.remove();
                         break;
@@ -151,6 +176,8 @@ abstract class Canli {
                 }
             }
         } else if(!av.getIsim().equals("Avci")){
+            // Av asla avci olamaz
+            // Eger avci ise ve avlayabilir durumda ise avlarini avlar.
             for (Canli avci : canlilar) {
                 if(avci.getIsim().equals("Avci") && avci.getAvlayabilir()) {
                     if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 8) {
@@ -164,18 +191,25 @@ abstract class Canli {
 
     }
 
+    // Dogum metodu, disi ve erkek canlilarin yavrularini dogurmasi icin kullanildi.
     protected void DogumMetodu(Canli erkek, ListIterator<Canli> iterator, ArrayList<Canli> canlilar, Random random) {
         for (Canli disi : canlilar) {
+            // Eger erkek ve disi ayni cinsiyette degilse ve dogurabilir durumda ise dogurur.
             if (erkek.getIsim().equals("Koyun") && erkek.getCinsiyet() == 'E' && disi.getIsim().equals("Koyun") && disi.getCinsiyet() == 'D' && erkek.getDogurabilir() && disi.getDogurabilir()) {
+                // Eger erkek ve disi arasindaki mesafe 3'ten kucukse dogurur.
                 if (Math.sqrt(Math.pow(erkek.getXKoordinati() - disi.getXKoordinati(), 2) + Math.pow(erkek.getYKoordinati() - disi.getYKoordinati(), 2)) <= 3) {
                     System.out.println("Koyun doğdu");
                     if (random.nextInt(100) >= 50) {
+                        // Eger rastgele bir sayi 50'den buyukse erkek yavru dogar.
                         Yavru yavru = new Yavru("Koyun", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'E', 2);
                         yavru.setDogurabilir(false);
                         iterator.add(yavru);
                     } else {
-                        Yavru yavru = new Yavru("Koyun", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'E', 2);
+                        // Eger rastgele bir sayi 50'den kucukse disi yavru dogar.
+                        Yavru yavru = new Yavru("Koyun", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'D', 2);
+                        // Yavru dogurduktan sonra dogurabilir durumu false yapilir.
                         yavru.setDogurabilir(false);
+                        // Yavru listeye eklenir.
                         iterator.add(yavru);
                     }
                     break;
@@ -250,6 +284,7 @@ abstract class Canli {
     }
 }
 
+// Av, Canli sinifindan turetilmistir. Avlarin hareket etme, avlanma ve dogum metotlari override edilmistir.
 class Av extends Canli {
     public Av(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi) {
         super(isim, xKoordinati, yKoordinati, cinsiyet, yurumeMesafesi);
@@ -318,14 +353,18 @@ class Yavru extends Canli {
 
 class Simulasyon {
     public static void main(String[] args) {
+        // Simulasyonun baslangicinda canlilarin olusturulmasi
         int maxSize = 500;
+        // Canlilarin olusturulmasi
         ArrayList<Canli> canlilar = new ArrayList<>();
         Random random = new Random();
+        // Canlilarin olusturulmasi
         for (int i = 0; i < 15; i++) {
             Av erkek = new Av("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2);
             erkek.setAvlayabilir(false);
             canlilar.add(erkek);
             Av disi = new Av("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2);
+            // Disi koyunlarin Avlayabilir durumu false yapilir.
             disi.setAvlayabilir(false);
             canlilar.add(disi);
         }
@@ -370,11 +409,16 @@ class Simulasyon {
     }
 
     private static void SimulaEt(ArrayList<Canli> canlilar, Random random) {
+        // Simulasyonun baslatilmasi
         for (int i = 0; i < 1000; i++) {
+            // Canlilarin hareket etmesi, avlanmasi ve dogum yapmasi
             ListIterator<Canli> iterator = canlilar.listIterator();
+            // İterator ile canlilarin uzerinde gezinilir.
             while (iterator.hasNext()) {
                 Canli av = iterator.next();
+                // İterator ile bir sonraki canliya gecilir.
                 av.Avlan(av, iterator, canlilar);
+                // Canlinin avlanmasi saglanir.
             }
             iterator = canlilar.listIterator();
             while (iterator.hasNext()) {
