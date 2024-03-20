@@ -326,8 +326,8 @@ class Simulasyon {
             erkek.setAvlayabilir(false);
             canlilar.add(erkek);
             Av disi = new Av("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2);
-            erkek.setAvlayabilir(false);
-            canlilar.add(erkek);
+            disi.setAvlayabilir(false);
+            canlilar.add(disi);
         }
 
         for (int i = 0; i < 5; i++) {
@@ -340,8 +340,8 @@ class Simulasyon {
             erkek.setAvlayabilir(false);
             canlilar.add(erkek);
             Av disi = new Av("Inek", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2);
-            erkek.setAvlayabilir(false);
-            canlilar.add(erkek);
+            disi.setAvlayabilir(false);
+            canlilar.add(disi);
         }
 
         for (int i = 0; i < 10; i++) {
