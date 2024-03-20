@@ -3,11 +3,11 @@ import java.util.Random;
 import java.util.ListIterator;
 
 abstract class Canli {
-    private String isim;
+    private final String isim;
     private int xKoordinati;
     private int yKoordinati;
-    private char cinsiyet;
-    private int yurumeMesafesi;
+    private final char cinsiyet;
+    private final int yurumeMesafesi;
     private boolean dogurabilirMi = true;
 
     private boolean avlayabilirMi = true;
@@ -319,7 +319,7 @@ class Yavru extends Canli {
 class Simulasyon {
     public static void main(String[] args) {
         int maxSize = 500;
-        ArrayList<Canli> canlilar = new ArrayList<Canli>();
+        ArrayList<Canli> canlilar = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < 15; i++) {
             Av erkek = new Av("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2);
@@ -374,7 +374,7 @@ class Simulasyon {
             ListIterator<Canli> iterator = canlilar.listIterator();
             while (iterator.hasNext()) {
                 Canli av = iterator.next();
-                av.AvlanmaMetodu(av, iterator, canlilar);
+                av.Avlan(av, iterator, canlilar);
             }
             iterator = canlilar.listIterator();
             while (iterator.hasNext()) {
@@ -384,7 +384,7 @@ class Simulasyon {
             iterator = canlilar.listIterator();
             while (iterator.hasNext()) {
                 Canli erkek = iterator.next();
-                erkek.DogumMetodu(erkek, iterator, canlilar, random);
+                erkek.Dogum(erkek, iterator, canlilar, random);
 
             }
         }
@@ -395,13 +395,29 @@ class Simulasyon {
         System.out.println("Kalan hayvan sayisi:" + canlilar.size());
         int koyunSayisi = 0, inekSayisi = 0, tavukSayisi = 0, horozSayisi = 0, kurtSayisi = 0, aslanSayisi = 0, avciSayisi = 0;
         for (Canli canli : canlilar) {
-            if (canli.getIsim().equals("Koyun")) koyunSayisi++;
-            else if (canli.getIsim().equals("Inek")) inekSayisi++;
-            else if (canli.getIsim().equals("Tavuk")) tavukSayisi++;
-            else if (canli.getIsim().equals("Horoz")) horozSayisi++;
-            else if (canli.getIsim().equals("Kurt")) kurtSayisi++;
-            else if (canli.getIsim().equals("Aslan")) aslanSayisi++;
-            else if (canli.getIsim().equals("Avci")) avciSayisi++;
+            switch (canli.getIsim()) {
+                case "Koyun":
+                    koyunSayisi++;
+                    break;
+                case "Inek":
+                    inekSayisi++;
+                    break;
+                case "Tavuk":
+                    tavukSayisi++;
+                    break;
+                case "Horoz":
+                    horozSayisi++;
+                    break;
+                case "Kurt":
+                    kurtSayisi++;
+                    break;
+                case "Aslan":
+                    aslanSayisi++;
+                    break;
+                case "Avci":
+                    avciSayisi++;
+                    break;
+            }
         }
         System.out.println("Koyun sayisi: " + koyunSayisi);
         System.out.println("Kurt sayisi: " + kurtSayisi);
