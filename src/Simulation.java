@@ -8,7 +8,9 @@ abstract class Canli {
     private int yKoordinati;
     private char cinsiyet;
     private int yurumeMesafesi;
-    private boolean dogurabilir = true;
+    private boolean dogurabilirMi = true;
+
+    private boolean avlayabilirMi = true;
 
     public Canli(String isim, int xKoordinati, int yKoordinati, char cinsiyet, int yurumeMesafesi) {
         this.isim = isim;
@@ -47,11 +49,19 @@ abstract class Canli {
     }
 
     public boolean getDogurabilir() {
-        return dogurabilir;
+        return dogurabilirMi;
     }
 
-    public void setDogurabilir(boolean active) {
-        this.dogurabilir = active;
+    public void setDogurabilir(boolean durum) {
+        this.dogurabilirMi = durum;
+    }
+
+    public boolean getAvlayabilir() {
+        return avlayabilirMi;
+    }
+
+    public void setAvlayabilir(boolean durum) {
+        this.avlayabilirMi = durum;
     }
 
     public abstract void hareketEt(Canli canli, Random random);
@@ -104,19 +114,19 @@ abstract class Canli {
     protected void AvlanmaMetodu(Canli av, ListIterator<Canli> iterator, ArrayList<Canli> canlilar) {
         if(av.getIsim().equals("Koyun") || av.getIsim().equals("Tavuk") || av.getIsim().equals("Horoz")) {
             for (Canli avci : canlilar) {
-                if(avci.getIsim().equals("Kurt")) {
+                if(avci.getIsim().equals("Kurt") && avci.getAvlayabilir()) {
                     if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 4) {
                         System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
                         iterator.remove();
                         break;
                     }
-                } else if(avci.getIsim().equals("Aslan") && av.getIsim().equals("Koyun")) {
+                } else if(avci.getIsim().equals("Aslan") && av.getIsim().equals("Koyun") && avci.getAvlayabilir()) {
                     if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 5) {
                         System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
                         iterator.remove();
                         break;
                     }
-                } else if(avci.getIsim().equals("Avci")){
+                } else if(avci.getIsim().equals("Avci") && avci.getAvlayabilir()){
                     if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 8) {
                         System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
                         iterator.remove();
@@ -126,13 +136,13 @@ abstract class Canli {
             }
         } else if(av.getIsim().equals("Inek")) {
             for (Canli avci : canlilar) {
-                if(avci.getIsim().equals("Aslan")) {
+                if(avci.getIsim().equals("Aslan") && avci.getAvlayabilir()) {
                     if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 5) {
                         System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
                         iterator.remove();
                         break;
                     }
-                } else if(avci.getIsim().equals("Avci")) {
+                } else if(avci.getIsim().equals("Avci") && avci.getAvlayabilir()) {
                     if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 8) {
                         System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
                         iterator.remove();
@@ -142,7 +152,7 @@ abstract class Canli {
             }
         } else if(!av.getIsim().equals("Avci")){
             for (Canli avci : canlilar) {
-                if(avci.getIsim().equals("Avci")) {
+                if(avci.getIsim().equals("Avci") && avci.getAvlayabilir()) {
                     if(Math.sqrt(Math.pow(avci.getXKoordinati() - av.getXKoordinati(), 2) + Math.pow(avci.getYKoordinati() - av.getYKoordinati(), 2)) <= 8) {
                         System.out.println(avci.getIsim() + " " + av.getIsim() + " avladi");
                         iterator.remove();
@@ -177,10 +187,12 @@ abstract class Canli {
                     if (random.nextInt(100) >= 50) {
                         Yavru yavru = new Yavru("Kurt", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'E', 3);
                         yavru.setDogurabilir(false);
+                        yavru.setAvlayabilir(false);
                         iterator.add(yavru);
                     } else {
-                        Yavru yavru = new Yavru("Koyun", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'D', 3);
+                        Yavru yavru = new Yavru("Kurt", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'D', 3);
                         yavru.setDogurabilir(false);
+                        yavru.setAvlayabilir(false);
                         iterator.add(yavru);
                     }
                     break;
@@ -223,10 +235,12 @@ abstract class Canli {
                     if (random.nextInt(100) >= 50) {
                         Yavru yavru = new Yavru("Aslan", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'E', 4);
                         yavru.setDogurabilir(false);
+                        yavru.setAvlayabilir(false);
                         iterator.add(yavru);
                     } else {
                         Yavru yavru = new Yavru("Aslan", disi.getXKoordinati() + 1, disi.getYKoordinati() + 1, 'D', 4);
                         yavru.setDogurabilir(false);
+                        yavru.setAvlayabilir(false);
                         iterator.add(yavru);
                     }
                     break;
@@ -302,14 +316,18 @@ class Yavru extends Canli {
     }
 }
 
-class Simulation {
+class Simulasyon {
     public static void main(String[] args) {
         int maxSize = 500;
         ArrayList<Canli> canlilar = new ArrayList<Canli>();
         Random random = new Random();
         for (int i = 0; i < 15; i++) {
-            canlilar.add(new Av("Koyun",random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2));
-            canlilar.add(new Av("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2));
+            Av erkek = new Av("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2);
+            erkek.setAvlayabilir(false);
+            canlilar.add(erkek);
+            Av disi = new Av("Koyun", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2);
+            erkek.setAvlayabilir(false);
+            canlilar.add(erkek);
         }
 
         for (int i = 0; i < 5; i++) {
@@ -318,25 +336,30 @@ class Simulation {
         }
 
         for (int i = 0; i < 5; i++) {
-            canlilar.add(new Av("Inek", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2));
-            canlilar.add(new Av("Inek", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2));
+            Av erkek = new Av("Inek", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 2);
+            erkek.setAvlayabilir(false);
+            canlilar.add(erkek);
+            Av disi = new Av("Inek", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 2);
+            erkek.setAvlayabilir(false);
+            canlilar.add(erkek);
         }
 
         for (int i = 0; i < 10; i++) {
-            canlilar.add(new Av("Tavuk", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 1));
+            Av disi = new Av("Tavuk", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 1);
+            disi.setAvlayabilir(false);
+            canlilar.add(disi);
         }
 
         for (int i = 0; i < 10; i++) {
-            canlilar.add(new Av("Horoz", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1));
+            Av erkek = new Av("Horoz", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1);
+            erkek.setAvlayabilir(false);
+            canlilar.add(erkek);
         }
 
         for (int i = 0; i < 4; i++) {
             canlilar.add(new Avci("Aslan", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 4, 5));
             canlilar.add(new Avci("Aslan", random.nextInt(maxSize), random.nextInt(maxSize), 'D', 4, 5));
         }
-        canlilar.add(new Avci("Avci", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1, 8));
-        canlilar.add(new Avci("Avci", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1, 8));
-        canlilar.add(new Avci("Avci", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1, 8));
         canlilar.add(new Avci("Avci", random.nextInt(maxSize), random.nextInt(maxSize), 'E', 1, 8));
 
         System.out.println("*****************************************************");
